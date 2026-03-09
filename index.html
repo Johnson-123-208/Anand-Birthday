@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Anand! 🎉</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0b1e;
+            --accent-gold: #d4af37;
+            --soft-gold: #f9e29d;
+            --text-color: #f0f0f0;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --gradient: linear-gradient(135deg, #0a0b1e 0%, #1a1c3a 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Music Toggle */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-gold);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 60px 20px;
+            background: radial-gradient(circle at center, rgba(26, 28, 58, 0.8) 0%, #0a0b1e 100%);
+        }
+
+        .hero-img-container {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-gold);
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            }
+
+            to {
+                box-shadow: 0 0 40px rgba(212, 175, 55, 0.7);
+            }
+        }
+
+        .hero-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--soft-gold), var(--accent-gold), var(--soft-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+        }
+
+        /* Responsive Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 60px;
+            color: var(--accent-gold);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .hero {
+                padding: 100px 20px;
+            }
+        }
+
+        .about-text {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            order: 2;
+        }
+
+        @media (min-width: 769px) {
+            .about-text {
+                order: 1;
+            }
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 15px 15px 0px rgba(212, 175, 55, 0.1);
+            transition: transform 0.5s ease;
+            max-width: 100%;
+            height: auto;
+            order: 1;
+        }
+
+        @media (min-width: 769px) {
+            .about-image {
+                order: 2;
+            }
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: clamp(300px, 50vh, 500px);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item::after {
+            content: '🔍 View';
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 11, 30, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            background: var(--gradient);
+            padding: 50px 20px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin: 40px 0;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer-unit {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            min-width: 90px;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+
+        .timer-unit span:first-child {
+            display: block;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .timer-unit span:last-child {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        /* Special Message */
+        .message-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+        }
+
+        .message-box {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            line-height: 2;
+            font-style: italic;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .message-box::before,
+        .message-box::after {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            color: var(--accent-gold);
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .message-box::before {
+            top: -30px;
+            left: 0px;
+        }
+
+        .message-box::after {
+            bottom: -70px;
+            right: 0px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border: 1px solid var(--accent-gold);
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+            object-fit: contain;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="music-control" onclick="toggleMusic()" id="musicBtn" title="Play/Pause Music">🔇</div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" type="audio/mpeg">
+    </audio>
+
+    <section class="hero">
+        <div class="hero-img-container">
+            <img src="images/photo1.jpg" alt="Anand Hero">
+        </div>
+        <h1>Happy Birthday Anand 🎉</h1>
+        <p>Celebrating a wonderful person born on March 10, 2000</p>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title reveal">About Anand</h2>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>Anand is a truly special person, known for a kindness that warms every heart and an inspiring spirit
+                    that motivates everyone around him.</p>
+                <p>Full of dreams and a zest for life, he brings joy into every room he enters. Since March 10, 2000,
+                    the world has been a brighter place with his presence.</p>
+            </div>
+            <div class="about-image reveal">
+                <img src="images/photo2.jpg" alt="Anand Photo 2">
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title reveal">Memory Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+                <img src="images/photo3.jpg" alt="Anand Photo 3">
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+                <img src="images/photo4.jpg" alt="Anand Photo 4">
+            </div>
+        </div>
+    </section>
+
+    <section id="countdown">
+        <h2 class="section-title reveal">Birthday Countdown</h2>
+        <div class="countdown-container reveal">
+            <div class="timer" id="timer">
+                <div class="timer-unit"><span id="days">00</span><span>Days</span></div>
+                <div class="timer-unit"><span id="hours">00</span><span>Hours</span></div>
+                <div class="timer-unit"><span id="minutes">00</span><span>Minutes</span></div>
+                <div class="timer-unit"><span id="seconds">00</span><span>Seconds</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="message-section">
+        <h2 class="section-title reveal">Special Message</h2>
+        <div class="message-box reveal">
+            Dear Anand, may your day be as spectacular as your smile and as beautiful as your heart.
+            On this special journey of life, may you find success at every step and joy in every moment.
+            Wishing you a year filled with love, laughter, and all the dreams you hold dear.
+            Happy Birthday!
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with love to celebrate Anand since March 10, 2000 ❤️</p>
+    </footer>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        // Countdown
+        function updateTimer() {
+            const now = new Date();
+            let target = new Date(`March 10, ${now.getFullYear()} 00:00:00`);
+            if (now > target) target = new Date(`March 10, ${now.getFullYear() + 1} 00:00:00`);
+            const diff = target - now;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('days').innerText = d.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+        }
+        setInterval(updateTimer, 1000); updateTimer();
+
+        // Reveal
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        });
+
+        // Canvas / Particles
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [], bgParticles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y; this.color = color;
+                this.size = Math.random() * 3 + 1;
+                this.vx = (Math.random() - 0.5) * 6; this.vy = (Math.random() - 0.5) * 6;
+                this.opacity = 1;
+            }
+            update() { this.x += this.vx; this.y += this.vy; this.vy += 0.05; this.opacity -= 0.01; }
+            draw() { ctx.globalAlpha = this.opacity; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+
+        class BGParticle {
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 1.5; this.v = Math.random() * 0.5 + 0.1; }
+            update() { this.y -= this.v; if (this.y < 0) this.y = canvas.height; }
+            draw() { ctx.globalAlpha = 0.2; ctx.fillStyle = '#d4af37'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+
+        function createBurst(x, y) {
+            const colors = ['#d4af37', '#f9e29d', '#00d2ff', '#ffffff'];
+            for (let i = 0; i < 30; i++) particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+        }
+
+        for (let i = 0; i < 100; i++) bgParticles.push(new BGParticle());
+
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bgParticles.forEach(p => { p.update(); p.draw(); });
+            particles = particles.filter(p => { p.update(); p.draw(); return p.opacity > 0; });
+            requestAnimationFrame(loop);
+        }
+        loop();
+
+        setInterval(() => { if (window.scrollY < 500) createBurst(Math.random() * canvas.width, Math.random() * canvas.height * 0.7); }, 1500);
+
+        // Lightbox & Music
+        function openLightbox(el) { document.getElementById('lightbox-img').src = el.querySelector('img').src; document.getElementById('lightbox').style.display = 'flex'; }
+        function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
+
+        let playing = false;
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if (playing) { audio.pause(); btn.innerText = '🔇'; }
+            else { audio.play().catch(() => alert("Click page first to allow music!")); btn.innerText = '🎵'; }
+            playing = !playing;
+        }
+    </script>
+</body>
+
+</html>
